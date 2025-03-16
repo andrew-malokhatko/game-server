@@ -16,15 +16,12 @@ export async function POST(req: NextRequest) {
     const data: ServerData = await req.json();
     const { ip, port } = data;
 
-    // Validate the input data
     if (typeof ip !== 'string' || typeof port !== 'number') {
       return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
     }
 
-    // Store the validated data in Vercel KV
     await setServerData(ip, port);
 
-    // Create a response with CORS headers
     const response = NextResponse.json({ status: 'success' }, { status: 200 });
     response.headers.set('Access-Control-Allow-Origin', '*');
     response.headers.set('Access-Control-Allow-Methods', 'POST');

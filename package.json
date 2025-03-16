@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@upstash/redis": "^1.34.5",
     "@vercel/kv": "^3.0.0",
     "next": "15.2.2",
     "react": "^19.0.0",

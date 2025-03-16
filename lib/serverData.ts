@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 
 // Define the shape of the server data for type safety
 interface ServerData {
@@ -6,29 +6,33 @@ interface ServerData {
   port: number | null;
 }
 
-const SERVER_DATA_KEY = 'gameServerData'; // Unique key for the KV store
+// Initialize Upstash Redis client with environment variables
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || '',
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
+});
+
+const SERVER_DATA_KEY = 'gameServerData'; // Unique key for Redis
 
 export async function setServerData(ip: string, port: number): Promise<void> {
   const serverData: ServerData = { ip, port };
   try {
-    await kv.set(SERVER_DATA_KEY, serverData);
+    await redis.set(SERVER_DATA_KEY, JSON.stringify(serverData));
   } catch (error) {
-    console.error('Error setting server data in Vercel KV:', error);
+    console.error('Error setting server data in Upstash Redis:', error);
     throw error;
   }
 }
 
 export async function getServerData(): Promise<ServerData> {
   try {
-    const serverData = await kv.get<ServerData>(SERVER_DATA_KEY);
-    // Return the stored data or default if null
-    return serverData || { ip: null, port: null };
+    const data = await redis.get<string | null>(SERVER_DATA_KEY);
+    if (data) {
+      return JSON.parse(data) as ServerData;
+    }
+    return { ip: null, port: null }; // Default if no data exists
   } catch (error) {
-    console.error('Error getting server data from Vercel KV:', error);
+    console.error('Error getting server data from Upstash Redis:', error);
     return { ip: null, port: null }; // Fallback to default on error
   }
 }
-
-
-/// curl -X POST http://192.168.0.10:3000/api/register -H "Content-Type: application/json" -d '{"ip": "127.0.0.1", "port": 8080}'
-// curl http://192.168.0.10:3000/api/server

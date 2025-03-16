@@ -12,10 +12,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 });
   }
 
-  // Retrieve the stored server data from Vercel KV
   const serverData: ServerData = await getServerData();
 
-  // Create a response with CORS headers
   const response = NextResponse.json(serverData, { status: 200 });
   response.headers.set('Access-Control-Allow-Origin', '*');
   response.headers.set('Access-Control-Allow-Methods', 'GET');
