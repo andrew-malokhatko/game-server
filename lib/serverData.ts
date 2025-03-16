@@ -1,18 +1,16 @@
 import { Redis } from '@upstash/redis';
 
-// Define the shape of the server data for type safety
 interface ServerData {
   ip: string | null;
   port: number | null;
 }
 
-// Initialize Upstash Redis client with environment variables
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL || '',
   token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
 });
 
-const SERVER_DATA_KEY = 'gameServerData'; // Unique key for Redis
+const SERVER_DATA_KEY = 'gameServerData';
 
 export async function setServerData(ip: string, port: number): Promise<void> {
   const serverData: ServerData = { ip, port };
@@ -30,14 +28,13 @@ export async function getServerData(): Promise<ServerData> {
     if (data) {
       return JSON.parse(data) as ServerData;
     }
-    return { ip: null, port: null }; // Default if no data exists
+    return { ip: null, port: null };
   } catch (error) {
     console.error('Error getting server data from Upstash Redis:', error);
-    return { ip: null, port: null }; // Fallback to default on error
+    return { ip: null, port: null };
   }
 }
 
-
 // curl -X POST https://game-server-bmplospky-andrew-malokhatkos-projects.vercel.app/api/register -H "Content-Type: application/json" -d '{"ip": "127.0.0.1", "port": 8080}'
-// curl https://mygameproject.vercel.app/api/server
+// curl http://192.168.0.10:3000
 // https://game-server-bmplospky-andrew-malokhatkos-projects.vercel.app/

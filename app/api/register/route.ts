@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { setServerData } from '../../../lib/serverData';
 
-// Define the shape of the expected JSON body
 interface ServerData {
   ip: string;
   port: number;

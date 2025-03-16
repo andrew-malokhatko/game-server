@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerData } from '../../../lib/serverData';
 
-// Define the shape of the server data for type safety
 interface ServerData {
   ip: string | null;
   port: number | null;
