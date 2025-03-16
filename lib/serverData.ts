@@ -36,3 +36,8 @@ export async function getServerData(): Promise<ServerData> {
     return { ip: null, port: null }; // Fallback to default on error
   }
 }
+
+
+// curl -X POST https://game-server-bmplospky-andrew-malokhatkos-projects.vercel.app/api/register -H "Content-Type: application/json" -d '{"ip": "127.0.0.1", "port": 8080}'
+// curl https://mygameproject.vercel.app/api/server
+// https://game-server-bmplospky-andrew-malokhatkos-projects.vercel.app/
