@@ -13,7 +13,14 @@ export async function POST(req: NextRequest) {
 
   try {
     const data: ServerData = await req.json();
-    const { ip, port } = data;
+    let { ip, port } = data;
+
+    if (typeof port === 'string') {
+      port = parseInt(port, 10);
+      if (isNaN(port)) {
+        return NextResponse.json({ error: 'Invalid port' }, { status: 400 });
+      }
+    }
 
     if (typeof ip !== 'string' || typeof port !== 'number') {
       return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
