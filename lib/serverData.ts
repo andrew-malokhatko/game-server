@@ -47,10 +47,10 @@ export async function getServerData(): Promise<ServerData> {
   }
 }
 
-// curl -X POST http://192.168.0.10:3000/api/register -H "Content-Type: application/json" -d '{"ip": "127.0.0.1", "port": 8080}'
+// curl -X POST http://192.168.0.10:3000/api/register -H "Content-Type: application/json" -d '{"ip": "127.0.0.1", "port": "8080"}'
 // curl http://192.168.0.10:3000/api/server
 // https://game-server-bmplospky-andrew-malokhatkos-projects.vercel.app/
 
-// https://game-server-jz2a8srkz-andrew-malokhatkos-projects.vercel.app/
-// curl -X POST https://game-server-jz2a8srkz-andrew-malokhatkos-projects.vercel.app/api/register -H "Content-Type: application/json" -d '{"ip": "127.0.0.1", "port": 8080}'
-// curl https://game-server-jz2a8srkz-andrew-malokhatkos-projects.vercel.app/api/server
+// https://game-server-puce.vercel.app/
+// curl -X POST https://game-server-puce.vercel.app/api/register -H "Content-Type: application/json" -d '{"ip": "127.0.0.1", "port": 8080}'
+// curl https://game-server-puce.vercel.app/api/server

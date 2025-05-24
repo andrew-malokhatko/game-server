@@ -11,6 +11,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 });
   }
 
+  console.log("Hello");
+
   const serverData: ServerData = await getServerData();
 
   const response = NextResponse.json(serverData, { status: 200 });
